@@ -1,0 +1,145 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8"> 
+  <title>Upgrading a Rails 2/Legacy jQuery App to a Rails 3/Backbone.js/Twitter Bootstrap App</title> 
+  <meta name="viewport" content="width=1024, user-scalable=no"> 
+  
+  <!-- Replace path with correct path to deck.core.css. --> 
+  <link rel="stylesheet" href="deck.core.css" type="text/css"> 
+  <link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="themes/style/web-2.0.css">
+  <link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+  <link rel="stylesheet" href="custom.css">
+  
+  <!-- Any other extension CSS files go here. --> 
+  
+  <!-- Replace path with correct path to Modernizr file. --> 
+  <script src="modernizr.custom.js"></script> 
+</head> 
+<body class="deck-container"> 
+ 
+<!-- Create any number of elements with class slide within the container --> 
+
+<div class="slide" id="intro">
+  <div><h1>Rails 2 <span style="color:#699">&sdot;</span> Legacy jQuery<div style="color:#699">&rArr;</div>Rails 3 <span style="color:#699">&sdot;</span> Backbone.js <span style="color:#699">&sdot;</span> <span style="white-space:nowrap"><img src="twitter.png" style="margin:0;display:inline"> Bootstrap</span></h1>
+  <cite>slides: <a href="https://github.com/carpeliam/talks/jquery_lightning_20120822">https://github.com/carpeliam/talks/jquery_lightning_20120822</a></cite></div>
+</div>
+  
+  <div class="slide">
+    <h2>who are you?</h2>
+    <ul>
+      <li><a href="http://www.carpeliam.com/">liam morley</a></li>
+      <li>web/open source/boating enthusiast</li>
+      <li>singer/songwriter, avid hiker</li>
+      <li>likes long walks on the beach; hobbies include wearing clothes as soon as they're out of the dryer</li>
+      <li>software developer at the <a href="http://www.mitre.org">MITRE</a> corporation</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>the MITRE corporation</h2>
+    <ul>
+      <li>first .org website, ever</li>
+      <li>non-profit, federally funded</li>
+      <li>has a wide variety of "sponsors", ranging from the DoD to the Healthcare domain</li>
+      <li>~1,700 projects across a staff of ~7,500 employees</li>
+    </ul>
+  </div>
+
+
+  <div class="slide">
+    <h2>managing projects needs to be...</h2>
+    <ul>
+      <li class="slide">flexible</li>
+      <li class="slide">responsive</li>
+      <li class="slide">maintainable, extensible</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>Legacy jQuery</h2>
+    <ul>
+      <li class="slide">2 JavaScript files</li>
+      <li class="slide">~350 lines of code per file</li>
+      <li class="slide">click handlers galore</li>
+      <li class="slide"><code>$('.link').live('click', ...)</code></li>
+      <li class="slide">absolute lack of code organization</li>
+      <li class="slide">DOMception</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>Legacy Design</h2>
+    <ul>
+      <li class="slide">delivered HTML fragments over the wire</li>
+      <li class="slide">custom jQuery UI stylesheet</li>
+      <li class="slide">arbitrary values used for padding, margins, etc.</li>
+      <li class="slide">customized UI for specific users: many edge cases</li>
+    </ul>
+  </div>
+  
+  <div class="slide"></div>
+
+  <div class="slide">
+    <h2>New Code: Backbone.js</h2>
+    <ul>
+      <li class="good">Breaks down across Models, Views, etc.</li>
+      <li class="good">Breaks out client API from server API</li>
+      <li class="good">Scoping DOM events is dramatically easier</li>
+      <li class="good">57 files, ~70 lines of code per file</li>
+      <li class="meh">There's More Than One Way To Do It</li>
+    </ul>
+  </div>
+  
+  <div class="slide">
+    <h2>New Code: Twitter Bootstrap</h2>
+    <ul>
+      <li class="good">Loving the Whitespace</li>
+      <li class="good">Formalized padding, margins, colors etc. with variables (LESS/SCSS)</li>
+      <li class="good">Lightweight jQuery components replace jQuery UI widgets</li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>Rails 3</h2>
+    <ul>
+      <li class="good">Asset Pipeline enables use of CoffeeScript, SCSS</li>
+      <li class="good">Plugins (gems) available for integrating Backbone.js, Twitter Bootstrap</li>
+      <li class="good">Easy to integrate Jasmine specs from command line</li>
+      <li class="bad">templates used to be in <code>app/views</code>, are now in <code>app/assets/javascripts/backbone/templates</code></li>
+    </ul>
+  </div>
+
+  <div class="slide">
+    <h2>Was it worth it?</h2>
+    <ul>
+      <li>5 months of development time</li>
+      <li>10x performance gains</li>
+      <li>fantastic feedback</li>
+      <li>fewer bugs than previous efforts</li>
+      <li>it's freakin' gorgeous</li>
+    </ul>
+  </div>
+
+<!-- Other extension HTML snippets go here, at the bottom of the deck container. --> 
+
+<!-- Place the following snippet at the bottom of the deck container. -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- Update these paths to point to the correct files. --> 
+<script src="jquery.min.js"></script>
+<script src="deck.core.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+ 
+<!-- Add any other extension JS files here --> 
+
+<!-- Initialize the deck. You can put this in an external file if desired. --> 
+<script> 
+  $(function() {
+    $.deck('.slide');
+  });
+</script> 
+</body> 
+</html>
