@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <title>NodeConf 2013</title>
+    
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" href="core/deck.core.css">
+    
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" href="extensions/goto/deck.goto.css">
+    <link rel="stylesheet" href="extensions/menu/deck.menu.css">
+    <link rel="stylesheet" href="extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" href="extensions/status/deck.status.css">
+    <link rel="stylesheet" href="extensions/hash/deck.hash.css">
+    <link rel="stylesheet" href="extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" href="extensions/codemirror/deck.codemirror.css">
+    <link rel="stylesheet" href="extensions/codemirror/themes/default.css">
+
+    <!-- Style theme. More available in /themes/style/ or create your own. -->
+    <link rel="stylesheet" href="themes/style/swiss.css">
+    
+    <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+    <link rel="stylesheet" href="themes/transition/horizontal-slide.css">
+    
+    <!-- Required Modernizr file -->
+    <script src="modernizr.custom.js"></script>
+    <style>
+      .walker-creek-ranch.slide {
+        background: url(assets/WalkerCreekRanch.jpg) no-repeat fixed center;
+        background-size: cover;
+      }
+      .johnny-five.slide {
+        background: url(assets/sgier-johnny-five.png) no-repeat fixed center;
+        background-size: cover;
+      }
+      .ar-drone.slide {
+        background: url(assets/ardrone-2.0.jpg) no-repeat fixed center;
+        background-size: cover;
+      }
+      #distributed-chat.slide {
+        background: url(assets/dist-chat.jpg) no-repeat fixed center;
+        background-size: cover;
+        color: white;
+      }
+      #wrap-up.slide {
+        background: url(assets/DSC_3765.jpg) no-repeat fixed center;
+        background-size: cover;
+      }
+      .slide .semi-transparent {
+        background-color: rgba(255, 255, 255, 0.7);
+      }
+      .slide .background {
+        color: gray;
+        font-weight: lighter;
+        font-style: italic;
+      }
+    </style>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+  <!-- <h1>Slide</h1> -->
+  <p class="vcenter">
+    <iframe width="640" height="360" src="http://www.youtube.com/embed/Nh676s5WoLw?rel=0" frameborder="0" allowfullscreen></iframe>
+  </p>
+</section>
+
+<section class="walker-creek-ranch slide">
+  <h2>NodeConf 2013</h2>
+  <h3 style="color: #333">Walker Creek Ranch</h3>
+  <div style="padding: 25px; background-color: rgba(255, 255, 255, 0.6); display: inline-block; vertical-align: top; width: 559px">
+    <ul>
+      <li>An hour and 15 minutes north of San Francisco, CA
+      <li>Previously owned by Synanon cult, a drug rehab center of sorts
+      <li>Turtle Pond: kayaking, canoeing, swimming
+      <li>Cafeteria-style meals, bunks: pretty social
+      <li>Social/hacking hours: games, music, activities
+    </ul>
+  </div>
+  <img src="assets/ranch-location.png" style="margin-left: 10px; display: inline-block">
+</section>
+
+<section class="slide">
+  <h2>NodeConf 2013</h2>
+  <h3>Not your typical conference</h3>
+  <ul>
+    <li>In the middle of nowhere
+    <li>No keynotes, no tracks
+    <li>You attend all the talks
+    <li>More hacktime
+    <li>More social time
+    <li>Offered a "Significant Other" track
+  </ul>
+</section>
+
+<section class="slide">
+  <h3>The Talks</h3>
+  <ol style="display:inline-block">
+    <li>Domains <span class="background">error handling</span>
+    <li>Johnny Five <span class="background">Arduino board control</span>
+    <li>AR Drone <span class="background">code your own quadricopter</span>
+    <li>Distributed Chat <span class="background">node.js chat server 2.0</span>
+    <li>DTrace <span class="background">serious low-level debugging</span>
+    <li>Contributing to Node-Core <span class="background">demystifying the source</span>
+    <li>Express.js/Hapi.js <span class="background">evaluating framework options</span>
+    <li>Streams <span class="background">everything is a Stream</span>
+  </ol>
+  <img src="assets/schedule.jpg" style="margin-left: 10px; display: inline-block; width: 200px">
+</section>
+
+<section class="slide" id="domains">
+  <h3>Domains</h3>
+  <ul>
+    <li class="slide">Dealing with uncaught exceptions in Node.js is not straightforward
+    <li class="slide">Domains provide a way to handle multiple different IO operations as a single group
+    <li class="slide">Currently classified as "unstable"
+  </ul>
+</section>
+
+<section class="slide" id="domains-pt2">
+  <h3>Domains, Continued</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">var concatStream = require("concat-stream");
+var domain       = require("domain");
+var fs           = require("fs");
+var http         = require("http");
+var url          = require("url");
+
+http.createServer(function (req, res) {
+  var parsedUrl = url.parse(req.url, true);
+  console.log(req.method, parsedUrl.href);
+
+  if (parsedUrl.pathname === "/throw" && req.method === "GET") {
+    throw new Error("Pretend I am deeply nested inside library code!");
+  } else if (parsedUrl.pathname === "/sum-numbers" &&
+      req.method === "POST") {
+    req.pipe(concatStream(function (data) {
+      var numbers = JSON.parse(data);
+      var sum = numbers.reduce(function (acc, number) {
+        return acc + number;
+      }, 0);
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/plain");
+      res.end("Sum: " + sum);
+    }));
+  } else if (parsedUrl.pathname === "/file" && req.method === "GET") {
+    var fileName = parsedUrl.query.name;
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    fs.createReadStream(fileName).pipe(res);
+  } else {
+    res.statusCode = 404;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("No content for " + req.url);
+  }
+}).listen(1337);</textarea>
+  </div>
+</section>
+
+<section class="slide" id="domains-pt3">
+  <h3>Domains, Continued</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">var concatStream = require("concat-stream");
+var domain       = require("domain");
+var fs           = require("fs");
+var http         = require("http");
+var url          = require("url");
+
+http.createServer(function (req, res) {
+  var parsedUrl = url.parse(req.url, true);
+  console.log(req.method, parsedUrl.href);
+
+  var d = domain.create();
+
+  d.on('error', function (error) {
+    res.writeHead(500, {'Content-Type': 'text/plain'});
+    res.end("Couldn't fulfill request because of an error: " +
+      error.message);
+  });
+
+  d.run(function() {
+    if (parsedUrl.pathname === "/throw" && req.method === "GET") {
+      throw new Error("Pretend I am deeply nested inside library code!");
+    } else if (parsedUrl.pathname === "/sum-numbers" &&
+        req.method === "POST") {
+      req.pipe(concatStream(function (data) {
+        var numbers = JSON.parse(data);
+        var sum = numbers.reduce(function (acc, number) {
+          return acc + number;
+        }, 0);
+
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "text/plain");
+        res.end("Sum: " + sum);
+      }));
+    } else if (parsedUrl.pathname === "/file" && req.method === "GET") {
+      var fileName = parsedUrl.query.name;
+
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/plain");
+      fs.createReadStream(fileName).pipe(res);
+    } else {
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "text/plain");
+      res.end("No content for " + req.url);
+    }
+
+  });
+}).listen(1337);</textarea>
+  </div>
+</section>
+
+<section class="johnny-five slide" id="johnny-five">
+  <h3>Johnny Five</h3>
+  <ul>
+    <li>Open Source JavaScript Arduino programming framework
+  </ul>
+  <div class="semi-transparent">
+    <textarea class="code" mode="javascript" style="display: none;">var five = require('johnny-five');
+five.Board().on('ready', function() {
+  five.Led(13).strobe(1000);
+});</textarea>
+  </div>
+  <ul>
+    <li>Why JavaScript?
+      <ul class="semi-transparent slide">
+        <li>These systems are "inherently reactionary in that they wait for some event or data and then do some thing"
+        <li>With other platforms, "the volume of code to create the reactionary system (including eventmachine/twisted/redis/pubsub/etc) quickly grows beyond simple hobbyist experimentation"
+        <li>optimizes for developer happiness
+      </ul>
+  </ul>
+</section>
+
+<section class="ar-drone slide" id="ar-drones">
+  <h3>AR Drones</h3>
+  <ul class="semi-transparent">
+    <li>An implementation of the networking protocols used by the <a href="http://ardrone2.parrot.com/" target="_blank">Parrot AR Drone 2.0</a>
+    <li>"the protocol can also be used to receive video and sensor data, enabling developers to write autonomous programs for the upcoming robot revolution"
+  </ul>
+</section>
+
+<section class="ar-drone slide" id="ar-drones-pt2">
+  <h3>AR Drones - Repl</h3>
+  <div class="semi-transparent">
+    <textarea class="code" mode="javascript" style="display: none;">var arDrone = require('ar-drone');
+var client  = arDrone.createClient();
+client.createRepl();</textarea>
+  </div>
+  <p>
+  <div class="semi-transparent">
+    <textarea class="code" mode="javascript" style="display: none;">$ node repl.js
+// Make the drone takeoff
+drone> takeoff()
+true
+// Wait for the drone to takeoff
+drone> clockwise(0.5)
+0.5
+// Let the drone spin for a while
+drone> land()
+true
+// Wait for the drone to land</textarea>
+  </div>
+</section>
+
+<section class="ar-drone slide" id="ar-drones-pt3">
+  <h3>AR Drones - Autonomous Droning</h3>
+  <div class="semi-transparent">
+    <textarea class="code" mode="javascript" style="display: none;">var arDrone = require('ar-drone');
+var client  = arDrone.createClient();
+
+client.takeoff();
+
+client
+  .after(5000, function() {
+    this.clockwise(0.5);
+  })
+  .after(3000, function() {
+    this.stop();
+    this.land();
+  });</textarea>
+  </div>
+</section>
+
+<section class="ar-drone slide" id="ar-drones-pt4">
+  <h3>AR Drones - Control-a-Drone</h3>
+  <div class="semi-transparent">
+    <textarea class="code" mode="coffeescript" style="display: none;">connect = require 'connect'
+http = require 'http'
+
+app = connect()
+app.use connect.static "#{process.cwd()}/public"
+app.use connect.logger()
+app.use connect.cookieParser()
+app.use connect.session secret: 'drone magic'
+
+server = http.createServer app
+
+io = require('socket.io').listen server
+
+server.listen 8000
+
+arDrone = require 'ar-drone'
+client = arDrone.createClient()
+
+io.sockets.on 'connection', (socket) ->
+  socket.on 'take-off', -> client.takeoff()
+  socket.on 'land', -> client.land()
+  socket.on 'cw', (speed) -> client.clockwise(speed)
+  socket.on 'ccw', (speed) -> client.counterClockwise(speed)</textarea>
+  </div>
+</section>
+
+<section class="slide" id="distributed-chat">
+  <h3>Distributed C<span style="font-size:50%">h</span>at</h3>
+  <p>Walk-through in writing a distributed chat system using Node. You kind of had to be there. Don't worry about it.<sup style="color:red">*</sup></p>
+  <p style="font-size: 0.6em;position: absolute; bottom: 35px; right: 35px"><sup style="color:red">*</sup>See me for the code if you're curious, though.</p>
+</section>
+
+<section class="slide" id="dtrace">
+  <h3>DTrace</h3>
+  <ul>
+    <li>"dynamic trace"
+    <li>tool for troubleshooting kernel-/application-level problems in real time
+  </ul>
+  <img src="assets/dtrace-architecture.png">
+  <ul>
+    <li>With DTrace, you can trace events in
+    <ul>
+      <li>The node Engine
+      <li>Node.js scripts
+      <li>The kernel (system calls, scheduling, memory management, etc.)
+    </ul>
+  <ul>
+</section>
+
+<section class="slide" id="dtrace-pt2">
+  <h3>Add probes to your Node app</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">/* echofile-server.js */
+var dtp = require('dtrace-provider').
+      createDTraceProvider('echofile-server');
+dtp.addProbe('echo-start', 'char *');
+dtp.addProbe('echo-done', 'char *', 'int');
+dtp.addProbe('echo-error', 'char *', 'char *');
+// ...
+dtp.fire('echo-start', function() {
+  return [req.params[0]];
+});
+// ...
+dtp.fire('echo-error', function() {
+  return [req.params[0], JSON.stringify(e)];
+});
+// ...
+dtp.fire('echo-done', function() {
+  return [req.params[0], len];
+});</textarea>
+  </div>
+</section>
+
+<section class="slide" id="dtrace-pt3">
+  <h3>DTrace the added probes</h3>
+  <div>
+    <textarea class="code" mode="clike" style="display: none;">#!/usr/sbin/dtrace -s
+#pragma D option quiet
+echofile-server*:::echo-start
+{
+  printf("%s: %s\n", probename, copyinstr(arg0));
+}
+echofile-server*:::echo-done
+{
+  printf("%s: %s %d bytes\n", probename, copyinstr(arg0), arg1);
+}
+echofile-server*:::echo-error
+{
+  printf("%s\n", copyinstr(arg1));
+}</textarea>
+  </div>
+</section>
+
+<section class="slide" id="node-src">
+  <h3>Contributing to node-core</h3>
+  <ul>
+    <li>Contributing to large open source projects is daunting
+    <li>Node.js is a daunting codebase spanning JavaScript and V8 C/C++ bindings
+    <li>See me if you're curious to know more
+  </ul>
+</section>
+
+<section class="slide" id="web-services">
+  <h3>Web Services w/Node, Express, and Hapi</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">var http = require('http');
+var server = http.createServer(function (req, res) {
+  if (req.url === '/version') {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    var result = { version: '1.0.0' };
+    res.end(JSON.stringify(result));
+  }
+});
+server.listen(3000);</textarea>
+  </div>
+</section>
+
+<section class="slide" id="express">
+  <h3>Web Services w/Node, Express, and Hapi</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">var express = require('express');
+var http = require('http');
+var app = express();
+app.configure(function () {
+  app.use(app.router);
+});
+app.get('/version', function (req, res) {
+  var result = { version: '1.0.0' };
+  res.json(result);
+});
+http.createServer(app).listen(3000);</textarea>
+  </div>
+  <ul>
+    <li>Node : Ruby :: Express : Sinatra
+    <li>Adds support for middleware, basic auth, web-oriented shortcuts
+    <li>middleware is loaded sequentially
+  </ul>
+</section>
+
+<section class="slide" id="hapi">
+  <h3>Web Services w/Node, Express, and Hapi</h3>
+  <div>
+    <textarea class="code" mode="javascript" style="display: none;">var hapi = require('hapi');
+var server = new hapi.Server(8000);
+server.route({
+  method: 'GET',
+  path: '/version',
+  handler: function (req) {
+    req.reply({ version: '1.0.0' })
+      .header('X-­‐API-­‐Version', '1.0.0');
+  };
+});
+server.route({ method: 'POST', path: '/user',
+  handler: function(req) {
+    // use req.payload to create new user
+  },
+  config: { validate: { payload: {
+    name: hapi.types.String().alphanum().max(30).required()
+  } } }
+});
+server.start();</textarea>
+  </div>
+  <ul>
+    <li>From Walmart Labs (not Walmart)
+    <li>Configuration-based
+    <li>Input validation/authentication is built-in to routing
+  </ul>
+</section>
+
+<section class="slide" id="streams">
+  <h3>Streams</h3>
+  <img src="assets/streams-home.png">
+  <p>Streams are big in node. Reading and writing to STDIN/STDOUT, a file, or a socket are all done through streams. Also, these streams can be combined so that you can direct the output of one stream into the input of another. This can get pretty powerful but also a little confusing.</p>
+</section>
+
+<section class="slide" id="streams-pipe">
+  <h3>Streams: Meet Pipe</h3>
+  <img src="assets/streams-meet-pipe.png">
+</section>
+
+<section class="slide" id="streams-pipe-success">
+  <h3>Streams: Meet Pipe (Success!)</h3>
+  <img src="assets/streams-meet-pipe-success.png">
+</section>
+
+<section class="slide" id="streams-http-server">
+  <h3>Streams: HTTP Server</h3>
+  <img src="assets/streams-http-server.png">
+</section>
+
+<section class="slide" id="wrap-up">
+  <h3>Wrap-Up</h3>
+  <ul>
+    <li>AAA+++ would go again
+    <li>The node.js community's approach is different/refreshing
+    <li>Not about solving the problem you already have, but about new approaches to problems you have yet to face
+  </ul>
+</section>
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+    <label for="goto-slide">Go to slide:</label>
+    <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+    <datalist id="goto-datalist"></datalist>
+    <input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="jquery-1.7.2.min.js"></script>
+<script src="core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="core/deck.core.js"></script>
+<script src="extensions/hash/deck.hash.js"></script>
+<script src="extensions/menu/deck.menu.js"></script>
+<script src="extensions/goto/deck.goto.js"></script>
+<script src="extensions/status/deck.status.js"></script>
+<script src="extensions/navigation/deck.navigation.js"></script>
+<script src="extensions/scale/deck.scale.js"></script>
+<script src="extensions/codemirror/codemirror.js"></script>
+<script src="extensions/codemirror/mode/javascript/javascript.js"></script>
+<script src="extensions/codemirror/mode/coffeescript/coffeescript.js"></script>
+<script src="extensions/codemirror/mode/clike/clike.js"></script>
+<script src="extensions/codemirror/deck.codemirror.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+    $(function() {
+        $.deck('.slide');
+    });
+</script>
+</body>
+</html>
