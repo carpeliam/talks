@@ -11,10 +11,12 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
         <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
-    
+
         <link rel="stylesheet" href="css/theme.css" id="theme">
-    
+
 
         <!-- For syntax highlighting -->
         <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css" id="highlight-theme">
@@ -142,7 +144,7 @@
                 
                     
                         
-    <section data-html="slides/on-july-13th-india-will-send-the-worlds-last-telegram-stop.html"></section>
+    <section data-background="/images/0614-India-Telegram_full_600.jpg" data-html="slides/on-july-13th-india-will-send-the-worlds-last-telegram-stop.html"></section>
 
 
                     
@@ -190,7 +192,7 @@
                 
                     
                         
-    <section data-html="slides/my-favorite-learnsomethingneweveryday-yet-we-can-all-get-better-at-learning.html"></section>
+    <section data-html="slides/norad-tracks-santas-path-on-christmas-eve-because-of-a-typo.html"></section>
 
 
                     
@@ -198,7 +200,7 @@
                 
                     
                         
-    <section data-html="slides/norad-tracks-santas-path-on-christmas-eve-because-of-a-typo.html"></section>
+    <section data-background="/images/lightbulb1.jpg" data-html="slides/my-favorite-learnsomethingneweveryday-yet-we-can-all-get-better-at-learning.html"></section>
 
 
                     
@@ -215,13 +217,14 @@
             // Full list of configuration options available here:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
-                controls: true,
+                controls: false,
                 progress: true,
                 history: true,
-                center: true,
+                center: false,
+                autoSlide: 20 * 1000,
 
                 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
 
                 // Optional libraries used to extend on reveal.js
                 dependencies: [
@@ -237,11 +240,6 @@
                     { src: 'js/loadhtmlslides.js', condition: function() { return !!document.querySelector( '[data-html]' ); } }
                 ]
             });
-
-            // var id = setInterval(Reveal.right, 20 * 1000);
-            // Reveal.addEventListener("slidechanged", function() {
-            //     if (Reveal.isLastSlide()) { clearInterval(id); }
-            // });
         </script>
 
     </body>

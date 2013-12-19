@@ -1,2 +1,8 @@
 # Learn Something New Every Day
-<blockquote class="twitter-tweet" lang="en"><p>New Year&#39;s resolution step 1: Learn something new every day. Step 2: Catalog the 365 things I learn in 2013. <a href="https://twitter.com/search?q=%23learnsomethingneweveryday&amp;src=hash">#learnsomethingneweveryday</a></p>&mdash; @carpeliam <a href="https://twitter.com/carpeliam/statuses/285539722690973696">December 31, 2012</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+> New Year's resolution step 1: Learn something new every day. Step 2: Catalog the 365 things I learn in 2013. [#learnsomethingneweveryday](https://twitter.com/search?q=%23learnsomethingneweveryday&amp;src=hash)
+>
+> &mdash; @carpeliam [December 31, 2012](https://twitter.com/carpeliam/statuses/285539722690973696)
+
+note:
+    Why did I do this? What were the goals

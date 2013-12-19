@@ -12,12 +12,22 @@
     "i-worked-on-learning-chords-on-the-ukelele-tonight-taking-a-standard-righty-tuning-and-flipping-it-upside-down.html",
     "a-local-philosophy-professor-is-leading-a-charge-to-update-the-universal-handicapped-icon.html",
     "that-paragraph-before-an-article-that-sums-up-why-you-should-read-it-it-has-a-name-its-called-a-nut-graph.html",
-    "on-july-13th-india-will-send-the-worlds-last-telegram-stop.html",
+    {
+        "filename": "on-july-13th-india-will-send-the-worlds-last-telegram-stop.html",
+        "attr": {
+            "data-background": "/images/0614-India-Telegram_full_600.jpg"
+        }
+    },
     "the-international-prototype-kilogram-is-the-official-kilogram-but-maybe-not-for-long.html",
     "the-chicago-river-was-basically-designed-as-an-extension-of-the-chicago-sewer-system.html",
     "emberjs.html",
     "i-remote-debugged-my-first-mobile-website.html",
     "finally-i-know-how-to-track-down-an-event-to-the-code-that-executes-it.html",
-    "my-favorite-learnsomethingneweveryday-yet-we-can-all-get-better-at-learning.html",
-    "norad-tracks-santas-path-on-christmas-eve-because-of-a-typo.html"
+    "norad-tracks-santas-path-on-christmas-eve-because-of-a-typo.html",
+    {
+        "filename": "my-favorite-learnsomethingneweveryday-yet-we-can-all-get-better-at-learning.html",
+        "attr": {
+            "data-background": "/images/lightbulb1.jpg"
+        }
+    }
 ]
