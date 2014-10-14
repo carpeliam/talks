@@ -34,5 +34,16 @@
     ],
     "demo.md",
     "what-does-this-buy-us.md",
-    "why-should-i-care.md"
+    "why-should-i-care.md",
+    [
+        "tools.html",
+        "chrome-plugin.html",
+        "chrome-plugin-routes.html",
+        "chrome-plugin-data.html",
+        "chrome-plugin-promises.html",
+        "chrome-plugin-performance.html",
+        "chrome-plugin-info.html",
+        "yeomanember-cli.md"
+    ],
+    "in-conclusion.md"
 ]
