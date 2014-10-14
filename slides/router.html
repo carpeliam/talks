@@ -1,0 +1,14 @@
+<h2>Router</h2>
+
+<pre><code>
+  App.Router.map ->
+    @route "about"
+    @resource "projects", ->
+      @route "show", {path: "/:project_id"}
+    @resource "members", ->
+      @route "show", {path: "/:member_id"}
+    @resource "events", ->
+      @route "show", {path: "/:event_id"}
+    @route "connect"
+    @route "resources"
+</code></pre>

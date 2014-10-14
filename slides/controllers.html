@@ -1,0 +1,19 @@
+<h2>Controllers</h2>
+
+<pre><code>
+  PopHealth.DashboardMeasureController = Ember.ObjectController.extend
+    isSelected: ( ->
+      measureIds = @get('currentUser.preferences.selected_measure_ids.[]')
+      measureIds.contains @get('hqmfId')
+    ).property('hqmfId', 'currentUser.preferences.selected_measure_ids.[]')
+
+    actions:
+      select: ->
+        hqmfId = @get('hqmfId')
+        measureIds = @get('currentUser.preferences.selected_measure_ids.[]')
+        if measureIds.contains hqmfId
+          measureIds.removeObject hqmfId
+        else
+          measureIds.addObject hqmfId
+        @set('currentUser.preferences.selected_measure_ids.[]', measureIds)
+</code></pre>

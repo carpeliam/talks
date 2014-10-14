@@ -1,0 +1,17 @@
+<h2>Ember.Object (CoffeeScript)</h2>
+
+<pre><code>
+  App.Person = Ember.Object.extend
+    # these will be supplied by `create`
+    firstName: null
+    lastName: null
+    fullName: ( ->
+      "#{@get('firstName')} #{@get('lastName')}"
+    ).property('firstName', 'lastName')
+
+  ironMan = App.Person.create
+    firstName: 'Tony'
+    lastName: 'Stark'
+
+  ironMan.get 'fullName' # "Tony Stark"
+</code></pre>

@@ -1,0 +1,10 @@
+{
+  "generator-reveal": {
+    "presentationTitle": "Ember.js is Kind of Cool",
+    "packageVersion": "0.0.1",
+    "useSass": true,
+    "deployToGithubPages": true,
+    "githubUsername": "carpeliam",
+    "githubRepository": "emberiskindofcool"
+  }
+}

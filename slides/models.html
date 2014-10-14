@@ -1,0 +1,23 @@
+<h2>Models</h2>
+
+<pre><code>
+  PopHealth.Measure = DS.Model.extend
+    cmsId: DS.attr 'string'
+    hqmfId: DS.attr 'string'
+    name: DS.attr 'string'
+    description: DS.attr 'string'
+    continuousVariable: DS.attr 'boolean'
+    episodeOfCare: DS.attr 'boolean'
+    subs: DS.attr()
+
+    category: DS.belongsTo 'category'
+
+    cmsNumber: ( ->
+      matches = @get('cmsId').match(/CMS(\d+)v(\d+)/)
+      matches?[1]
+    ).property 'cmsId'
+    cmsVersion: ( ->
+      matches = @get('cmsId').match(/CMS(\d+)v(\d+)/)
+      matches?[2]
+    ).property 'cmsId'
+</code></pre>
