@@ -1,0 +1,7 @@
+<h2>Route</h2>
+
+<pre><code>
+  PopHealth.IndexRoute = Ember.Route.extend
+    setupController: (controller) ->
+      controller.set 'model', @store.all('category') # don't request from server
+</code></pre>

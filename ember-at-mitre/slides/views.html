@@ -1,0 +1,18 @@
+<h2>Views</h2>
+
+<pre><code>
+  # window.PopHealth = Ember.Application.create
+  #   customEvents:
+  #     'show.bs.collapse': 'showCollapse'
+  #     'hidden.bs.collapse': 'hideCollapse'
+
+  PopHealth.SidebarCategoryView = Ember.View.extend
+    classNames: ['panel', 'panel-default']
+    # click: -> @doStuff()
+    showCollapse: ->
+      controller = @get 'controller'
+      controller.set 'isOpen', yes
+    hideCollapse: ->
+      controller = @get 'controller'
+      controller.set 'isOpen', no
+</code></pre>
