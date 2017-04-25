@@ -16,6 +16,12 @@
     "node": ">=0.8.0"
   },
   "scripts": {
+    "build": "grunt dist",
+    "start": "grunt",
     "test": "grunt test"
+  },
+  "dependencies": {
+    "bower": "^1.8.0",
+    "grunt-cli": "^1.2.0"
   }
 }
