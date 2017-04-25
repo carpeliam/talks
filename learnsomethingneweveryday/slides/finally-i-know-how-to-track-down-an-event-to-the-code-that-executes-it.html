@@ -1,0 +1,20 @@
+<h2>Finally, I know how to track down an event to the code that executes it.</h2>
+
+<pre><code class="javascript">// Bind up a couple of event handlers
+​$("#foo").on({
+    click: function(){ alert("Hello") },
+    mouseout: function(){ alert("World") }
+});​​​
+
+// Lookup events for this particular Element
+​$._data( $("#foo")[0], "events" );
+// > Object {click: Array[1], mouseout: Array[1]}
+</code></pre>
+
+<a href="https://twitter.com/search?q=%23learnsomethingneweveryday&amp;src=hash">#learnsomethingneweveryday</a>
+&mdash;
+<a href="https://twitter.com/carpeliam/statuses/390840417899393024">October 17, 2013</a>
+
+<aside class="notes">
+
+</aside>
