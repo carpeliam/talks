@@ -1,0 +1,21 @@
+<h2>Example</h2>
+
+<pre><code data-trim>
+{
+  person(personID: 4) {
+    name
+    gender
+    homeworld {
+      name
+    }
+    starshipConnection {
+      edges {
+        node {
+          id
+          manufacturers
+        }
+      }
+    }
+  }
+}
+</code></pre>
